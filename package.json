@@ -1,0 +1,20 @@
+{
+  "name": "shinjimae",
+  "version": "1.0.0",
+  "description": "A Whatsapp bot that can delete messages if contains \"wa.me/settings\" automatically",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "debug": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "AzumiSensei",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@whiskeysockets/baileys": "^6.1.0",
+    "express": "^4.18.2",
+    "pino": "^8.14.1",
+    "qrcode": "^1.5.3"
+  }
+}
