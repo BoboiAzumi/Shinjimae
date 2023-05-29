@@ -49,7 +49,7 @@ export default class Whatsapp {
 
         this.sock.ev.on("messages.upsert", async (m) => {
             let isRevoked = m.messages[0].hasOwnProperty("message")? m.messages[0].message.hasOwnProperty("protocolMessage")? true : false : false
-            console.log(m)
+            //console.log(m)
             if (!m.messages[0].key.fromMe) {
                 if (!isRevoked) {
                     let isMessage = m.messages[0].hasOwnProperty("message") ? true : false
