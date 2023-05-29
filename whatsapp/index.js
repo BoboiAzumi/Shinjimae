@@ -1,5 +1,6 @@
 import makeWASocket, { DisconnectReason, useMultiFileAuthState } from "@whiskeysockets/baileys"
 import MAIN_LOGGER from 'pino'
+import {writeLog, newline} from "../log/index.js"
 
 export default class Whatsapp {
     constructor() {
@@ -55,7 +56,7 @@ export default class Whatsapp {
                     let isMessage = m.messages[0].hasOwnProperty("message") ? true : false
                     let isImage = isMessage ? m.messages[0].message.hasOwnProperty("imageMessage") ? true : false : false
                     let from = m.messages[0].key.remoteJid
-                    let msg = isMessage ? isImage ? m.messages[0].message.imageMessage.caption : m.messages[0].message.conversation ? m.messages[0].message.conversation : m.messages[0].message.extendedTextMessage.text ? m.messages[0].message.extendedTextMessage.text : "" : ""
+                    let msg = isMessage ? isImage ? m.messages[0].message.imageMessage.caption : m.messages[0].message.hasOwnProperty("conversation") ? m.messages[0].message.conversation : m.messages[0].message.hasOwnProperty("extendedTextMessage") ? m.messages[0].message.extendedTextMessage.text : "" : ""
 
                     let regex = /wa\.me\/settings/gi;
                     //console.log("True 1");
@@ -77,6 +78,10 @@ export default class Whatsapp {
                         }, from, [])
                         //await this.sendText(from, "Shinjimae !")
                         this.count += 1
+                        await writeLog("From        : "+m.messages[0].key.remoteJid)
+                        await writeLog("PushName    : "+m.messages[0].pushName)
+                        await writeLog("Message     : "+msg)
+                        await writeLog(newline)
                     }
                 }
             }
