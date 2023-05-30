@@ -2,6 +2,7 @@ import Server from "./server/index.js"
 import Whatsapp from "./whatsapp/index.js"
 import QRCode from "qrcode"
 import fs from "fs"
+import {check} from "./log/index.js"
 
 // Default server port is 1000
 const port = 1000
@@ -51,4 +52,17 @@ ServerInterface.server.get("/count", async(req, res) => {
     }
 
     res.send(JSON.stringify(struct))
+})
+
+ServerInterface.server.get("/log", async(req, res) => {
+    let logFile = "./cache_log/log.txt"
+    let c = await check(logFile)
+    if(!c){
+        res.status(500).send("Log File not Exists")
+    }
+    else{
+        let read = fs.readFileSync(logFile)
+        read = Buffer.from(read).toString("utf-8")
+        res.status(200).send("<pre>"+read+"</pre>")
+    }
 })

@@ -1,6 +1,6 @@
 import makeWASocket, { DisconnectReason, useMultiFileAuthState } from "@whiskeysockets/baileys"
 import MAIN_LOGGER from 'pino'
-import {writeLog, newline} from "../log/index.js"
+import {writeLog, newline, readCount, writeCount} from "../log/index.js"
 
 export default class Whatsapp {
     constructor() {
@@ -10,6 +10,12 @@ export default class Whatsapp {
         this.status = 0
         this.qr = null
         this.count = 0
+
+        this.readCount()
+    }
+
+    async readCount(){
+        this.count = await readCount()
     }
 
     async WAConnect() {
@@ -78,6 +84,7 @@ export default class Whatsapp {
                         }, from, [])
                         //await this.sendText(from, "Shinjimae !")
                         this.count += 1
+                        await writeCount(this.count)
                         await writeLog("From        : "+m.messages[0].key.remoteJid)
                         await writeLog("PushName    : "+m.messages[0].pushName)
                         await writeLog("Message     : "+msg)

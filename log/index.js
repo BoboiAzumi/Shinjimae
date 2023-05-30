@@ -40,3 +40,37 @@ export async function writeLog(string){
         fs.appendFileSync(logfile, newline+string)
     }
 }
+
+export async function writeCount(string){
+    let dir = __dirname+"/../cache_log"
+    let logfile = dir+"/count.txt"
+    let checkdir = await check(dir)
+    
+    if(!checkdir){
+        fs.mkdirSync(dir)
+    }
+    string =  ""+string
+    fs.writeFileSync(logfile, string)
+}
+
+export async function readCount(){
+    let dir = __dirname+"/../cache_log"
+    let logfile = dir+"/count.txt"
+    let checkdir = await check(dir)
+    
+    if(!checkdir){
+        fs.mkdirSync(dir)
+    }
+
+    let checkFile = await check(logfile)
+
+    if(!checkFile){
+        return 0
+    }
+    else{
+        let file = fs.readFileSync(logfile)
+        file = Buffer.from(file).toString("utf-8")
+
+        return parseInt(file)
+    }
+}
