@@ -90,6 +90,11 @@ export default class Whatsapp {
                         await writeLog("Message     : "+msg)
                         await writeLog(newline)
                     }
+
+                    if(msg == "@isalive"){
+                        await this.sock.readMessages([m.messages[0].key])
+                        setTimeout(() => this.sendText(from, "I am still Alive"), 1300)
+                    }
                 }
             }
         })
