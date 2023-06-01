@@ -4,8 +4,8 @@ import QRCode from "qrcode"
 import fs from "fs"
 import {check} from "./log/index.js"
 
-// Default server port is 1000
-const port = 1000
+// Default server port is 8080
+const port = 8080
 
 const ServerInterface = new Server(port)
 const WhatsappInterface = new Whatsapp()
